@@ -2,7 +2,7 @@
 
 Generator for making a model with threaded events.
 
-TODO: Write better description ¯\\_(ツ)_/¯
+TODO: Write better description ¯\\\_(ツ)_/¯
 
 ## Installation
 
