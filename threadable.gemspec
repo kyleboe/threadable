@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = '>=2.6.0'
 
-  s.add_dependency("orm_adapter", "~> 0.5.0")
-  s.add_dependency("railties", ">= 4.2.0", "< 6.0")
+  s.add_dependency "activerecord", ">= 4.2", "< 6.0"
 
   s.add_development_dependency "bundler", "~> 2.0"
+  s.add_development_dependency 'pry'
   s.add_development_dependency "rake", "~> 10.0"
   s.add_development_dependency "rspec", "~> 3.0"
 end
