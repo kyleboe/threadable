@@ -1,9 +1,10 @@
 require 'pry'
-class ThreadableGenerator < Rails::Generators::Base
+class ThreadableGenerator < Rails::Generators::NamedBase
   # Need to build 3 classes/tables ThreadableEvent, Threadable, Threaded
-  
+  namespace "threadable"
+  desc 'does a thing'
   def raise_a_test
-    
+    puts 'do the thing'
   end
 
   def raise_another_test
