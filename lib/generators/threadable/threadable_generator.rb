@@ -5,10 +5,7 @@ module Threadable
   module Generators
     class ThreadGenerator < Rails::Generators::Base
       # Need to build 3 classes/tables ThreadableEvent, Threadable, Threaded
-      desc 'does another thing'
-      def raise_a_test
-        puts 'do the thing'
-      end
+      desc 'Adds activerecord relationships to specified models'
 
       def raise_another_test
         binding.pry
