@@ -1,10 +1,9 @@
 require 'pry'
 module Threadable
   module Generators
-    class ThreadGenerator < Rails::Generators::NamedBase
+    class InstallGenerator < Rails::Generators::Base
       # Need to build 3 classes/tables ThreadableEvent, Threadable, Threaded
-      namespace "threadable"
-      desc 'does another thing'
+      desc 'does a thing'
       def raise_a_test
         puts 'do the thing'
       end
