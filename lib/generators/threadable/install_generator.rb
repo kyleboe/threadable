@@ -47,7 +47,7 @@ module Threadable
         if Rails.version >= '5.0.3'
           db_migrate_path
         else
-          @migration_path ||= File.join("db", "migrate")
+          @migration_path ||= File.join('db', 'migrate')
         end
       end
 
@@ -56,13 +56,11 @@ module Threadable
       end
 
       def migration_version
-        if rails5_and_up?
-          "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
-        end
+        "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]" if rails5_and_up?
       end
 
       def model_path(name)
-        @model_path ||= File.join("app", "models", "#{name}.rb")
+        @model_path ||= File.join('app', 'models', "#{name}.rb")
       end
     end
   end
