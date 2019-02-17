@@ -3,7 +3,7 @@
 require 'pry'
 module Threadable
   module Generators
-    class ThreadGenerator < Rails::Generators::Base
+    class ThreadGenerator < Rails::Generators::NamedBase
       # Need to build 3 classes/tables ThreadableEvent, Threadable, Threaded
       desc 'Adds activerecord relationships to specified models'
 
@@ -17,19 +17,19 @@ module Threadable
         content = model_contents
 
         class_path = if namespaced?
-          class_name.to_s.split("::")
-        else
-          [class_name]
-        end
+                       class_name.to_s.split('::')
+                     else
+                       [class_name]
+                     end
 
         indent_depth = class_path.size - 1
-        content = content.split("\n").map { |line| "  " * indent_depth + line } .join("\n") << "\n"
+        content = content.split("\n").map { |line| '  ' * indent_depth + line } .join("\n") << "\n"
 
         inject_into_class(model_path(class_path), class_path.last, content) if model_exists?(class_path)
       end
 
       def generate_model(name)
-        invoke "active_record:model", [name], migration: false unless model_exists?(name) && behavior == :invoke
+        invoke 'active_record:model', [name], migration: false unless model_exists?(name) && behavior == :invoke
       end
 
       def model_exists?(name)
@@ -44,7 +44,7 @@ module Threadable
         if Rails.version >= '5.0.3'
           db_migrate_path
         else
-          @migration_path ||= File.join("db", "migrate")
+          @migration_path ||= File.join('db', 'migrate')
         end
       end
 
@@ -53,13 +53,11 @@ module Threadable
       end
 
       def migration_version
-        if rails5_and_up?
-          "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
-        end
+        "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]" if rails5_and_up?
       end
 
       def model_path(name)
-        @model_path ||= File.join("app", "models", "#{name}.rb")
+        @model_path ||= File.join('app', 'models', "#{name}.rb")
       end
     end
   end

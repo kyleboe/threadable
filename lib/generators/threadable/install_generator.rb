@@ -6,11 +6,12 @@ module Threadable
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include ActiveRecord::Generators::Migration
-      source_root File.expand_path('../../templates', __FILE__)
+      source_root File.expand_path('../templates', __dir__)
       # Need to build 3 classes/tables ThreadableEvent, Threadable, Threaded
       desc 'Creates a Threadable Event migration file for your application'
+
       def copy_event_migration
-        migration_template "event_migration.rb", "#{migration_path}/create_threadable_events.rb", migration_version: migration_version
+        migration_template('event_migration.rb', "#{migration_path}/create_threadable_events.rb", migration_version: migration_version)
       end
 
       private
@@ -19,19 +20,19 @@ module Threadable
         content = model_contents
 
         class_path = if namespaced?
-          class_name.to_s.split("::")
-        else
-          [class_name]
-        end
+                       class_name.to_s.split('::')
+                     else
+                       [class_name]
+                     end
 
         indent_depth = class_path.size - 1
-        content = content.split("\n").map { |line| "  " * indent_depth + line } .join("\n") << "\n"
+        content = content.split("\n").map { |line| '  ' * indent_depth + line } .join("\n") << "\n"
 
         inject_into_class(model_path(class_path), class_path.last, content) if model_exists?(class_path)
       end
 
       def generate_model(name)
-        invoke "active_record:model", [name], migration: false unless model_exists?(name) && behavior == :invoke
+        invoke 'active_record:model', [name], migration: false unless model_exists?(name) && behavior == :invoke
       end
 
       def model_exists?(name)

@@ -2,7 +2,7 @@
 
 module Threadable
   def is_threadable(options = {})
-     has_many :threadable_events, as: :record, dependent: :destroy
+    has_many :threadable_events, as: :record, dependent: :destroy
   end
 
   def is_threaded(options = {})

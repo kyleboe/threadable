@@ -5,30 +5,26 @@ module Threadable
     module Recordable
       extend ActiveSupport::Concern
 
-      def create_and_log_event(params, user = nil, threadable, record = self)
+      def create_and_log_event(params, threadable, user = nil)
         assign_attributes(params)
         return false unless save
-        log_event('create', user, threadable, record)
+
+        log_event(action: 'create', user: user, threadable: threadable, record: self, attr_name: nil)
       end
 
-      def update_and_log_event(params, user = nil, threadable, record = self)
+      def update_and_log_event(params, threadable, user = nil)
         assign_attributes(params)
         if changes.any? && valid?
           changes.each do |attr_name, changes|
-            log_event('update', user, threadable, record, attr_name, changes)
+            log_event({ action: 'update', user: user, threadable: threadable, record: self, attr_name: attr_name }, changes)
           end
         end
         save
       end
 
-      def log_event(action, user, threadable, record, attr_name = nil, changes = [nil, nil])
-        Event.create!(action: action,
-                      user: user,
-                      threadable: threadable,
-                      record: record,
-                      attr_name: attr_name,
-                      record_was: changes[0],
-                      record_is: changes[1])
+      def log_event(attr_hash, changes = [nil, nil])
+        event_params = { record_was: changes[0], record_is: changes[1] }.merge(attr_hash)
+        Event.create!(event_params)
       end
     end
   end
